@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 
-const posts = [];
+var posts = [];
 
 
 app.get('/', function (req, res) {
@@ -51,6 +51,19 @@ app.post('/compose', function (req, res) {
 
   posts.push(post);
   res.redirect('/');
+});
+
+
+
+// keep working in this area
+app.get('/post/:postid', function (req, res) {
+  const postid = req.params.postid;
+  posts.forEach(function(post){
+    console.log(post)
+    if (post.title === postid){
+      console.log(post.title);
+    }
+  });
 });
 
 
