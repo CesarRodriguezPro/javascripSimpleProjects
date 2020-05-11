@@ -59,7 +59,7 @@ app.post('/compose', function (req, res) {
 app.get('/post/:postid', function (req, res) {
   const postid = req.params.postid;
   posts.forEach(function(post){
-    console.log(post)
+    console.log(post);
     if (post.title === postid){
       console.log(post.title);
     }
