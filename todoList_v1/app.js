@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const date = require(__dirname+"/date.js")
+const date = require(__dirname+"/date.js");
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -20,7 +20,7 @@ app.listen(3000, function () {
 
 
 app.get('/', function (req, res) {
-    let day = date();
+    let day = date.GetDate();
     res.render("lists", {
         listTitle: day,
         newListItem: items
