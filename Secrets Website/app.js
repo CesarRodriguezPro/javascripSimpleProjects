@@ -1,9 +1,10 @@
 //jshint esversion:6
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require('body-parser');
 const ejs = require("ejs");
 const mongoose = require('mongoose');
-
+const encrypt = require('mongoose-encryption');
 const app = express();
 
 app.use(express.static("public"));
@@ -16,24 +17,32 @@ mongoose.connect("mongodb://localhost:27017/userDB", {
     useUnifiedTopology: true
 })
 
-const userSchema = {
+// for integrating encrytion level 2 we need to add a proper mongoose Schema
+const userSchema = new mongoose.Schema({
     email:String,
     password:String
-}
+});
 
+// i learn to use env with dotenv
+userSchema.plugin(encrypt, {secret:process.env.SECRET, encryptedFields:['password']});
 const User = mongoose.model("User", userSchema)
+
+
 
 app.get("/", function(req, res){
     res.render('home');
 });
 
+
 app.get("/login", function(req, res){
     res.render('login');
 });
 
+
 app.get("/register", function(req, res){
     res.render('register');
 });
+
 
 app.post('/register', function(req, res){
 
@@ -49,6 +58,7 @@ app.post('/register', function(req, res){
         }
     });
 });
+
 
 app.post('/login', function(req, res){
     const username = req.body.username;
@@ -66,6 +76,7 @@ app.post('/login', function(req, res){
        }
     })
 })
+
 
 app.listen(3000, function(){
     console.log("Server Running");

@@ -3,3 +3,4 @@
 */mime.cmd
 */mime.ps1
 *.DS_Store
+.env
